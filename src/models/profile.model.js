@@ -28,3 +28,4 @@ export const profile_model = sequelize.define (
         }
     }
 )
+
