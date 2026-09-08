@@ -5,10 +5,10 @@ import { validate } from "../middlewares/validate.js";
 
 const userRoutes = Router()
 
-userRoutes.post("/users",validate,newUserValidation,CreateUser)
+userRoutes.post("/users",newUserValidation,validate,CreateUser)
 userRoutes.get("/users",getAllUsers)
 userRoutes.get("/users/:id",getUserById)
-userRoutes.put("/users/:id",validate,updateUserValidation,updateUser)
+userRoutes.put("/users/:id",updateUserValidation,validate,updateUser)
 userRoutes.delete("/users/:id",deleteUser)
 
 export { userRoutes }

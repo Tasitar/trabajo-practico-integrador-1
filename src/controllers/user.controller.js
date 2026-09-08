@@ -1,6 +1,7 @@
 import { matchedData } from "express-validator";
 import { profile_model } from "../models/profile.model.js";
 import { user_model } from "../models/user.model.js";
+import { article_model } from "../models/article.model.js";
 
 //username email password role USER MODEL
 //user_id  first_name last_name biography avatar_url birth_date PROFILE MODEL
@@ -45,7 +46,7 @@ export const getAllUsers = async (req, res) => {
             include: [
                 {
                     model: profile_model,
-                    as: 'profile'
+                    as: 'author'
                 }
             ]
         });
@@ -71,14 +72,8 @@ export const getUserById = async (req, res) => {
         const user = await user_model.findByPk(id, {
             attributes: { exclude: ['password'] },
             include: [
-                {
-                    model: profile_model,
-                    as: 'profile'
-                },
-                {
-                    model: article_model,
-                    as: 'articles' // Alias configurado para los artículos del autor
-                }
+                {model: profile_model,as: 'author'},
+                {model: article_model,as: 'articles'}
             ]
         });
 
@@ -110,7 +105,7 @@ export const updateUser = async (req, res) => {
         const { username, email, role, ...profileData } = validateData;
 
         const user = await user_model.findByPk(id, {
-            include: [{ model: profile_model, as: 'profile' }]
+            include: [{ model: profile_model, as: 'author' }]
         });
 
         if (!user) {

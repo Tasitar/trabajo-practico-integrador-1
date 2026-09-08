@@ -5,6 +5,7 @@ export const newUserValidation = [
     //estas son las validaciones de user
     body('username')
     .notEmpty().withMessage('El nombre de usuario es obligatorio')
+    .trim()
     .isLength({min: 3,max: 20}).withMessage('El username debe tener entre 3 y 20 caracteres')
     .isAlphanumeric().withMessage('El username solo debe contener letras y números')
     .custom(async (username) => {
