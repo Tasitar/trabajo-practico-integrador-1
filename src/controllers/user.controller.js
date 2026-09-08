@@ -4,6 +4,20 @@ import { user_model } from "../models/user.model.js";
 
 //username email password role USER MODEL
 //user_id  first_name last_name biography avatar_url birth_date PROFILE MODEL
+// {
+//   "username": "Revolver Ocelot",
+//   "email": "Manolo@gmail.com",
+//   "password"EPICACONTRASENA!",
+//   "role": "admin",
+//   "first_name": "Alejandro",
+//   "last_name": "Vallejos",
+//   "biography": "Administrador del blog",
+//   "avatar_url": "https://example.com/avatar.jpg"
+// } json para un create user
+
+
+
+
 export const CreateUser = async (req, res) => {
 
 try {

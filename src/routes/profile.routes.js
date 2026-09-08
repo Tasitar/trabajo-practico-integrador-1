@@ -1,11 +1,11 @@
-import { Router } from "express";
+// import { Router } from "express";
 
-const profileRoutes = Router()
+// const profileRoutes = Router()
 
-profileRoutes.post("/profiles")
-profileRoutes.get("/profiles")
-profileRoutes.get("/profiles/:id")
-profileRoutes.put("/profiles/:id")
-profileRoutes.delete("/profiles/:id")
+// profileRoutes.post("/profiles")
+// profileRoutes.get("/profiles")
+// profileRoutes.get("/profiles/:id")
+// profileRoutes.put("/profiles/:id")
+// profileRoutes.delete("/profiles/:id")
 
-export { profileRoutes }
+// export { profileRoutes }

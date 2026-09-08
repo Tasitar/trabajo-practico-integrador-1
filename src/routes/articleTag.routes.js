@@ -1,11 +1,11 @@
-import { Router } from "express";
+// import { Router } from "express";
 
-const articleTagRoutes = Router()
+// const articleTagRoutes = Router()
 
-articleTagRoutes.post("/articleTag")
-articleTagRoutes.get("/articleTag")
-articleTagRoutes.get("/articleTag/:id")
-articleTagRoutes.put("/articleTag/:id")
-articleTagRoutes.delete("/articleTag/:id")
+// articleTagRoutes.post("/articleTag")
+// articleTagRoutes.get("/articleTag")
+// articleTagRoutes.get("/articleTag/:id")
+// articleTagRoutes.put("/articleTag/:id")
+// articleTagRoutes.delete("/articleTag/:id")
 
-export { articleTagRoutes }
+// export { articleTagRoutes }
