@@ -5,7 +5,7 @@ import { tag_model } from "./tag.model.js"
 import { user_model } from "./user.model.js"
 
 
-export const db_relations = () => {
+ export const db_relations = () => {
     //relacion 1 a 1
     user_model.hasOne(profile_model, {foreignKey: "user_id", as:'author'})
     profile_model.belongsTo(user_model, {foreignKey: "user_id", as:'user'})
@@ -16,3 +16,11 @@ export const db_relations = () => {
     article_model.belongsToMany(tag_model,{through:article_tag_model, foreignKey:"article_id", as:"tags"})
     tag_model.belongsToMany(article_model,{through:article_tag_model, foreignKey:"tag_id",as: "article"})
 }
+
+export {
+    user_model,
+    profile_model,
+    article_model,
+    tag_model,
+    article_tag_model
+};
