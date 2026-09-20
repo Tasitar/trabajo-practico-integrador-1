@@ -65,7 +65,7 @@ export const getAllUsers = async (req, res) => {
             include: [
                 {
                     model: profile_model,
-                    as: 'author'
+                    as: 'profile'
                 }
             ]
         });
@@ -91,8 +91,8 @@ export const getUserById = async (req, res) => {
         const user = await user_model.findByPk(id, {
             attributes: { exclude: ['password'] },
             include: [
-                {model: profile_model,as: 'author'},
-                {model: article_model,as: 'articles'}
+                { model: profile_model, as: 'profile' },
+                { model: article_model, as: 'articles' }
             ]
         });
 
@@ -124,7 +124,7 @@ export const updateUser = async (req, res) => {
         const { username, email, password, role, ...profileData } = validateData;
 
         const user = await user_model.findByPk(id, {
-            include: [{ model: profile_model, as: 'author' }]
+            include: [{ model: profile_model, as: 'profile' }]
         });
 
         if (!user) {
