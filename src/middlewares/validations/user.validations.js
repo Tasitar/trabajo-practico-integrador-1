@@ -44,7 +44,17 @@ export const newUserValidation = [
     body('avatar_url').optional()
         .isURL().withMessage('Debe proporcionar una URL válida para el avatar')
 
-    ]
+];
+
+export const loginUserValidation = [
+    body('email')
+        .notEmpty().withMessage('El email es obligatorio')
+        .isEmail().withMessage('Debe proporcionar un email válido'),
+
+    body('password')
+        .notEmpty().withMessage('La contraseña es obligatoria')
+        .isLength({ min: 8 }).withMessage('La contraseña debe tener al menos 8 caracteres')
+];
 
     export const updateUserValidation = [
     param('id')
