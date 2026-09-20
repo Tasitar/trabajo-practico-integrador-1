@@ -1,4 +1,5 @@
 import { matchedData } from "express-validator";
+import bcrypt from "bcryptjs";
 import { profile_model } from "../models/profile.model.js";
 import { user_model } from "../models/user.model.js";
 import { article_model } from "../models/article.model.js";
@@ -20,24 +21,42 @@ import { article_model } from "../models/article.model.js";
 
 
 export const CreateUser = async (req, res) => {
+    try {
+        const validateData = matchedData(req);
+        const { username, email, password, role, ...profileData } = validateData;
 
-try {
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-    const validateData = matchedData(req)
+        const newUser = await user_model.create({
+            username,
+            email,
+            password: hashedPassword,
+            role
+        });
 
-    const { username, email, password, role, ...profileData } = validateData
+        const newProfile = await profile_model.create({
+            ...profileData,
+            user_id: newUser.id
+        });
 
-const newUser = await user_model.create({username, email, password, role})
-
-const newProfile = await profile_model.create({...profileData,user_id:newUser.id})
-return res.status(201).json(newProfile)
-    
-} catch (error) {
-    console.error(error);
-    return res.status(500).json({ok:false, msg: "error al intentar crear un nuevo user"})
-}
-
-}
+        return res.status(201).json({
+            ok: true,
+            msg: "Usuario creado correctamente",
+            data: {
+                user: {
+                    id: newUser.id,
+                    username: newUser.username,
+                    email: newUser.email,
+                    role: newUser.role
+                },
+                profile: newProfile
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ ok: false, msg: "error al intentar crear un nuevo user" });
+    }
+};
 
 export const getAllUsers = async (req, res) => {
     try {
@@ -101,8 +120,8 @@ export const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
         const validateData = matchedData(req);
-        
-        const { username, email, role, ...profileData } = validateData;
+
+        const { username, email, password, role, ...profileData } = validateData;
 
         const user = await user_model.findByPk(id, {
             include: [{ model: profile_model, as: 'author' }]
@@ -112,7 +131,17 @@ export const updateUser = async (req, res) => {
             return res.status(404).json({ ok: false, msg: "Usuario no encontrado" });
         }
 
-        await user.update({ username, email, role });
+        const updateData = {
+            username,
+            email,
+            role
+        };
+
+        if (password) {
+            updateData.password = await bcrypt.hash(password, 10);
+        }
+
+        await user.update(updateData);
 
         if (user.profile) {
             await user.profile.update(profileData);
